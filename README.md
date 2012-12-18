@@ -42,6 +42,9 @@ var Foo = Class({initialize:function(){}})
 var Bar = Class(Foo, {foo:function(){}})
 Foo.childClasses == [Bar.prototype]
 ```
+### toString
+
+If you call the `.toString` method on a `new Class`, even if the class is actually a different function, its the `initialize` method that is wrapped inside which is represented (helps debugging). 
 
 ## Example
 
