@@ -32,7 +32,7 @@
 
     fn.prototype.childClasses = []
 
-    for(index in object) if(hasOwn.call(object, index) fn.prototype[index] = object[index]
+    for(index in object) if(hasOwn.call(object, index)) fn.prototype[index] = object[index]
     fn.prototype.constructor = fn
     return fn
   }
