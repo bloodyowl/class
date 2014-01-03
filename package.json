@@ -2,6 +2,7 @@
   "name" : "bloody-class",
   "repository" : "https://github.com/bloodyowl/class.git",
   "issues" : "https://github.com/bloodyowl/class/issues",
+  "author" : "bloodyowl", 
   "version" : "1.0.0",
   "scripts": {
     "test": "tape test/*.js"
