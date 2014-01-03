@@ -2,6 +2,12 @@
 
 [![browser support](https://ci.testling.com/bloodyowl/class.png)](https://ci.testling.com/bloodyowl/class)
 
+### Install 
+
+```
+$ npm install bloody-class
+```
+
 ### Require
 
 ```javascript
