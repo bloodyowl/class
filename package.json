@@ -1,4 +1,8 @@
 {
+  "name" : "bloody-class",
+  "repository" : "https://github.com/bloodyowl/class.git",
+  "issues" : "https://github.com/bloodyowl/class/issues",
+  "version" : "1.0.0",
   "scripts": {
     "test": "tape test/*.js"
   },
