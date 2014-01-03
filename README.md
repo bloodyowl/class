@@ -1,5 +1,7 @@
 ## class
 
+[![browser support](https://ci.testling.com/bloodyowl/class.png)](https://ci.testling.com/bloodyowl/class)
+
 ### Require
 
 ```javascript
