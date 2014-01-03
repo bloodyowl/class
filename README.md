@@ -1,70 +1,67 @@
-# Class.js
+## class
 
-## Description
-
-**Class.js** is a simple Class implementation that can help you keeping your code clear and organized. 
-
-## How it works
-
-**Class.js** is based on `Constructor#prototype`, which means that the object that owns your methods is kept as a reference (which is what represents `__proto__` in recent browsers). 
-
-## Usage
+### Require
 
 ```javascript
-var myClass = Class([parent ,]{
-  initialize : function(){},
-  method1 : function(){},
-  method2 : function(){}
-  // …
-})
-
-new myClass([args])
+var klass = require("class")
 ```
 
-## API
+### Definition 
 
-### parentClass
+Classes are objects that contain inherits for instances. 
+You can extend and create instances of an existing class. 
+Classes are based on prototypal inheritance, that way, you can easily update all subclasses and instances from one of their parent class. 
 
-Class adds a `parentClass` (`Object reference`) property to the class `prototype` if based on a parent class. Its content is the parents prototype.  
+### Methods
 
-```javascript
-var Foo = Class({initialize:function(){}})
-var Bar = Class(Foo, {foo:function(){}})
-Bar.prototype.parentClass == Foo.prototype
-```
+#### `klass.extend([object])` -> `newClass`
 
-### childClasses
+Creates a new class that inherits from `klass`. Optionaly takes an `object` arguments that extends the `newClass` as owned properties. 
 
-Class adds a `childClasses` (`Array`) property every class `prototype`. When you make a child class, its prototype is pushed to the parent class `childClass`.
+#### `klass.create([args …])` -> `newInstance`
 
-```javascript
-var Foo = Class({initialize:function(){}})
-var Bar = Class(Foo, {foo:function(){}})
-Foo.childClasses == [Bar.prototype]
-```
-### toString
+Creates a new instance that inherits from `klass`. Its arguments are passed to `klass.constructor` which is called if `klass` owns a `constructor` method. 
 
-If you call the `.toString` method on a `new Class`, even if the class is actually a different function, its the `initialize` method that is wrapped inside which is represented (helps debugging). 
+#### `instance.destroy([args …])` 
 
-## Example
+Removes all the internal references to `instance`, as in `parent.instances` for instance. Its arguments are passed to `klass.destructor` which is called if `klass` owns a `destructor` method. 
+
+### Usage
 
 ```javascript
-var Foo = Class({
-  initialize : function(foo, bar){
-    this.foo = foo
-    this.bar = bar
-    return this
-  },
-  addBaz : function(baz){
-    this.baz = baz
-    return this
+// create a class
+var myClass = klass.extend({
+  // constructor is the method called when an instance is created
+  constructor : function(args/* …*/){ 
+    // this -> instance
+    // args … -> arguments passed through the `.create` method
+  }, 
+  destructor : function(){
+    // this -> instance
+    // args … -> arguments passed through the `.destroy` method
   }
 })
 
-var Baz = Class(Foo, {
-  addTest : function(test){
-    this.test = test
-    return this
-  }
-})
+// myClass has a "_klass" property with a uniq integer
+myClass._klass // -> integer
+
+// create an instance
+var myInstance = myClass.create()
+
+// myInstance has a "_id" property with a uniq integer (relative to its parent class)
+myInstance._id // -> integer
+
+// instance is in myClass._instances and myInstance._instances
+each(myClass._instances, console.log, console)
+// > logs [myInstance, "0", myClass._instances]
+
+// destroy an instance
+myInstance.destroy()
+
+// instance is now removed from myClass._instances
+each(myClass._instances, console.log, console)
+// > doesn't log anything
+
+// and wipe it out
+myInstance = null
 ```
