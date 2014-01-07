@@ -43,9 +43,7 @@
     , klassId = -1
     , intancesIds = {}
     , klassesMap = {}
-  
-  classExports._instances = {}
-  
+    
   classExports.create = function(){
     var self = this
       , instance = objectCreate(self)
@@ -57,7 +55,6 @@
     }
     instanceId = ++intancesIds[self._klass]
     instance._id = instanceId
-    instance._instances[instanceId] = instance
     return instance
   }
   
@@ -67,7 +64,6 @@
     if(_hasOwnProperty.call(instance, "_klass")) {
       return
     }
-    delete instance._instances[instance._id]
     if(_hasOwnProperty.call(parent || {}, "destructor") &&
         typeof instance.destructor == "function") {
       instance.destructor.apply(instance, arguments)
@@ -77,7 +73,6 @@
   classExports.extend = function(object){
     var klass = objectCreate(this)
     each(object, extendCallback, klass)
-    klass._instances = {}
     klass._klass = ++klassId
     intancesIds[klassId] = -1
     klassesMap[klassId] = klass

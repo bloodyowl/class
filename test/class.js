@@ -4,8 +4,6 @@ var tape = require("tape")
 
 tape("class", function(test){
 
-  test.plan(8)
-
   var properties = {
         constructor : function(foo){
           if(arguments.length) {
@@ -25,8 +23,8 @@ tape("class", function(test){
   test.equal(typeof parseInt(myKlass._klass, 10), "number", "has klass id")
   test.equal(myKlass.create()._klass, myKlass._klass, "instance has klass id")
   test.equal(typeof first._id, "number", "instance has unique instance id")
-  test.equal(getKeys(myKlass._instances).length, 2, "instances are pushed")
   first.destroy()
   test.equal(first.foo, null, "destructor is called on destroy")
-  test.equal(getKeys(myKlass._instances).length, 1, "instance is removed from instances")
+  test.end()
+
 })
