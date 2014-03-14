@@ -19,8 +19,8 @@ tape("class", function(test){
   test.equal(myKlass.foo, "bar", "extended (prop)")
   test.notEqual(myKlass.constructor.toString().indexOf("foo"), -1, "extended (ctor)")
   first.destroy()
+  test.ok(myKlass.isPrototypeOf(first))
   test.equal(first.foo, null, "destructor is called on destroy")
-  test.ok(first.extend().hasOwnProperty("constructor"), "adds constructor if not extended")
   test.end()
 
 })

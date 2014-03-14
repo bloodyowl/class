@@ -7,10 +7,6 @@ module.exports = {
   extend : function(object){
     var subKlass = create(this)
     extend(subKlass, object)
-    if(!hasMethod(subKlass, "constructor")) {
-      subKlass.constructor =
-        typeof subKlass.constructor == "function" ? subKlass.constructor : K
-    }
     return subKlass
   },
   create : function(){
@@ -21,8 +17,10 @@ module.exports = {
     return instance
   },
   destroy : function(){
-    if(typeof this.destructor == "function") {
+    if(hasMethod(this, "destructor")) {
       this.destructor.apply(this, arguments)
     }
-  }
+  },
+  constructor : K,
+  destructor : K
 }
