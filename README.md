@@ -88,6 +88,7 @@ var view = klass.extend({
 
 
 var myView = view.create({
+  name : "elementView",
   element : "#element",
   events : [
     {
