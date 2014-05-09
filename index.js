@@ -1,7 +1,7 @@
 var extend = require("bloody-collections/lib/extend")
-  , hasMethod = require("./lib/hasMethod")
-  , create = require("./lib/create")
-  , K = function(){}
+var hasMethod = require("./lib/hasMethod")
+var create = require("./lib/create")
+var K = function(){}
 
 module.exports = {
   extend : function(object){
@@ -14,11 +14,22 @@ module.exports = {
     if(hasMethod(instance, "constructor")) {
       instance.constructor.apply(instance, arguments)
     }
+    instance._accessors = {}
     return instance
   },
   destroy : function(){
     if(hasMethod(this, "destructor")) {
       this.destructor.apply(this, arguments)
+    }
+    this._accessors = {}
+  },
+  accessor : function(methodName){
+    var thisValue = this
+    if(this._accessors.hasOwnProperty(methodName)) {
+      return this._accessors[methodName]
+    }
+    return this._accessors[methodName] = function(){
+      return thisValue[methodName].apply(thisValue, arguments)
     }
   },
   constructor : K,

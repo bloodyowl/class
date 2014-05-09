@@ -8,43 +8,47 @@
 $ npm install bloody-class
 ```
 
-With [component(1)](http://component.io):
-
-```
-$ component install bloodyowl/class
-```
-
 ### Require
 
 ```javascript
-var klass = require("class")
+var klass = require("bloody-class")
 ```
 
 ### Definition
 
 Classes are objects that contain inherits for instances.
 You can extend and create instances of an existing class.
-Classes are based on prototypal inheritance, that way, you can easily update all subclasses and instances from one of their parent class.
+Classes are based on prototypal inheritance, that way, you can easily update
+all subclasses and instances from one of their parent class.
 
 ### Methods
 
 #### `klass.extend([object])` -> `newClass`
 
-Creates a new class that inherits from `klass`. Optionaly takes an `object` arguments that extends the `newClass` as owned properties.
+Creates a new class that inherits from `klass`. Optionaly takes an `object`
+arguments that extends the `newClass` as owned properties.
 
 #### `klass.create([args …])` -> `newInstance`
 
-Creates a new instance that inherits from `klass`. Its arguments are passed to `klass.constructor` which is called if `klass` owns a `constructor` method.
+Creates a new instance that inherits from `klass`. Its arguments are passed to
+`klass.constructor` which is called if `klass` owns a `constructor` method.
 
 #### `instance.destroy([args …])`
 
-Removes all the internal references to `instance`, as in `parent.instances` for instance. Its arguments are passed to `klass.destructor` which is called if `klass` owns a `destructor` method.
+Removes all the internal references to `instance`, as in `parent.instances` for
+instance. Its arguments are passed to `klass.destructor` which is called if
+`klass` owns a `destructor` method.
+
+#### `instance.accessor(name) > function`
+
+Returns a function that calls `instance[name]` with `instance` as `thisValue`
+and passes its arguments to the method.
 
 ### Example
 
 ```javascript
 var klass = require("bloody-class")
-  , $ = require("jquery")
+var $ = require("jquery")
 
 var view = klass.extend({
   constructor : function(){
@@ -69,8 +73,8 @@ var view = klass.extend({
   initEvent : function(){
     if(!this.events) return
     var index = -1
-      , length = this.events.length
-      , thisValue = this
+    var length = this.events.length
+    var thisValue = this
     while(++index < length) {
       ;(function(object){
         this.element.on(
