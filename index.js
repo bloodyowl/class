@@ -11,10 +11,10 @@ module.exports = {
   },
   create : function(){
     var instance = create(this)
+    instance._accessors = {}
     if(hasMethod(instance, "constructor")) {
       instance.constructor.apply(instance, arguments)
     }
-    instance._accessors = {}
     return instance
   },
   destroy : function(){
