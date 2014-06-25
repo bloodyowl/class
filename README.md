@@ -28,6 +28,12 @@ all subclasses and instances from one of their parent class.
 Creates a new class that inherits from `klass`. Optionaly takes an `object`
 arguments that extends the `newClass` as owned properties.
 
+##### `object`
+
+- `object.mixins` : array
+
+list of classes the given class should compose with.
+
 #### `klass.create([args …])` -> `newInstance`
 
 Creates a new instance that inherits from `klass`. Its arguments are passed to
@@ -94,6 +100,7 @@ var view = klass.extend({
 var myView = view.create({
   name : "elementView",
   element : "#element",
+  mixins : [events],
   events : [
     {
       type : "click",

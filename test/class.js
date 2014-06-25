@@ -33,3 +33,36 @@ tape("class", function(test){
   test.end()
 
 })
+
+tape("class mixins", function(test){
+
+  var hookMixin = klass.extend({
+    constructor : function(options){
+      this.test = [options.test]
+    },
+    destructor : function(options){
+      this.test = null
+    },
+    push : function(){
+      this.test.push.apply(this.test, arguments)
+    }
+  })
+
+  var finalClass = klass.extend({
+    constructor : function(){
+      console.log("create")
+      test.deepEqual(this.test, [1])
+    },
+    destructor : function(){
+      test.deepEqual(this.test, [1, 2, 3])
+    },
+    mixins : [hookMixin]
+  })
+
+  var finalInstance = finalClass.create({test:1})
+  finalInstance.push(2, 3)
+  test.deepEqual(finalInstance.test, [1, 2, 3])
+  finalInstance.destroy()
+  test.deepEqual(finalInstance.test, null)
+  test.end()
+})
