@@ -50,7 +50,6 @@ tape("class mixins", function(test){
 
   var finalClass = klass.extend({
     constructor : function(){
-      console.log("create")
       test.deepEqual(this.test, [1])
     },
     destructor : function(){
@@ -64,5 +63,57 @@ tape("class mixins", function(test){
   test.deepEqual(finalInstance.test, [1, 2, 3])
   finalInstance.destroy()
   test.deepEqual(finalInstance.test, null)
+  test.end()
+})
+
+tape("class multiple mixins", function(test){
+
+  var hookMixin = klass.extend({
+    constructor : function(options){
+      this.test = [options.test]
+    },
+    destructor : function(options){
+      this.test = null
+    },
+    push : function(){
+      this.test.push.apply(this.test, arguments)
+    }
+  })
+
+  var popMixin = klass.extend({
+    constructor : function(options){
+      this._canPop = true
+      test.equal(options.test, 1)
+      test.deepEqual(this.test, [1])
+    },
+    destructor : function(options){
+      this._canPop = null
+      test.pass()
+    },
+    pop : function(){
+      if(!this._canPop) {
+        return
+      }
+      this.test.pop.apply(this.test, arguments)
+    }
+  })
+
+  var finalClass = klass.extend({
+    constructor : function(){
+      test.deepEqual(this.test, [1])
+    },
+    destructor : function(){
+      test.deepEqual(this.test, [1, 2])
+    },
+    mixins : [hookMixin, popMixin]
+  })
+
+  var finalInstance = finalClass.create({test:1})
+  finalInstance.push(2, 3)
+  finalInstance.pop()
+  test.deepEqual(finalInstance.test, [1, 2])
+  finalInstance.destroy()
+  test.deepEqual(finalInstance.test, null)
+  test.equal(finalInstance._canPop, null)
   test.end()
 })
