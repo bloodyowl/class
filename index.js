@@ -37,7 +37,7 @@ module.exports = {
       this.mixins,
       function(mixin){
         if(hasMethod(mixin, "constructor")) {
-          mixin.constructor.apply(this, args)
+          mixin.constructor.apply(instance, args)
         }
       },
       this

@@ -111,6 +111,7 @@ tape("class multiple mixins", function(test){
   var finalInstance = finalClass.create({test:1})
   finalInstance.push(2, 3)
   finalInstance.pop()
+  test.notDeepEqual(finalClass.test, [1, 2])
   test.deepEqual(finalInstance.test, [1, 2])
   finalInstance.destroy()
   test.deepEqual(finalInstance.test, null)
